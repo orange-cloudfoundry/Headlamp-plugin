@@ -1,0 +1,26 @@
+initContainers:
+  - name: "headlamp-plugins"
+    image: ghcr.io/orange-cloudfoundry/headlamp-plugin:latest
+    imagePullPolicy: Always
+    command: ["/bin/sh", "-c", "mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/"]
+    volumeMounts:
+      - name: "headlamp-plugins"
+        mountPath: "/build/plugins"
+
+persistentVolumeClaim:
+  enabled: true
+  accessModes:
+    - ReadWriteMany
+  size: 1Gi
+
+volumeMounts:
+  - name: "headlamp-plugins"
+    mountPath: "/build/plugins"
+
+volumes:
+  - name: "headlamp-plugins"
+    persistentVolumeClaim:
+      claimName: "headlamp"
+
+config:
+  pluginsDir: "/build/plugins"
