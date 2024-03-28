@@ -1,0 +1,27 @@
+name: Build plugin image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build docker image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: setup docker
+        uses: docker-practice/actions-setup-docker@master
+
+      - name: build docker image
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: push docker image
+        run: |
+              docker push ghcr.io/orange-cloudfoundry/headlamp-plugin:latest
