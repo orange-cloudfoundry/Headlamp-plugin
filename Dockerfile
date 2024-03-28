@@ -12,7 +12,10 @@ COPY ./ /headlamp-plugins/
 RUN mkdir -p /headlamp-plugins/build
 
 # Build the headlamp plugin inside the container
-RUN npx @kinvolk/headlamp-plugin build /headlamp-plugins
+# RUN npx @kinvolk/headlamp-plugin build /headlamp-plugins
+RUN npm install -g @kinvolk/headlamp-plugin
+
+RUN headlamp-plugin build /headlamp-plugins
 
 # Extract the built plugin
 RUN npx @kinvolk/headlamp-plugin extract /headlamp-plugins/ /headlamp-plugins/build
