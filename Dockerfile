@@ -17,8 +17,9 @@ RUN npm install -g @kinvolk/headlamp-plugin
 
 RUN headlamp-plugin build /headlamp-plugins
 
+RUN headlamp-plugin extract /headlamp-plugins/ /headlamp-plugins/build
 # Extract the built plugin
-RUN npx @kinvolk/headlamp-plugin extract /headlamp-plugins/ /headlamp-plugins/build
+# RUN npx @kinvolk/headlamp-plugin extract /headlamp-plugins/ /headlamp-plugins/build
 
 FROM alpine:latest
 
