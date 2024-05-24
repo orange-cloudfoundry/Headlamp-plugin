@@ -1,62 +1,61 @@
 import {
     registerRoute,
-    registerRouteFilter,
     registerSidebarEntry,
-    registerSidebarEntryFilter,
-    K8s,
 } from '@kinvolk/headlamp-plugin/lib';
-import { SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
-import Typography from '@mui/material/Typography';
+import {
+    Link,
+    SectionBox,
+} from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import React from 'react';
+import {Typography} from '@mui/material';
+import {CrdList} from "./Components/CrdList";
+import {CrdDetails} from "./Components/CrdDetails";
 
 registerSidebarEntry({
     parent: null,
-    name: 'CRD',
-    label: "CRD List",
-    url: '/crd',
-    icon: 'mdi:list-box-outline',
+    name: 'plugin',
+    label: 'Plugin',
+    url: '/plugin',
+    icon: 'mdi:comment-quote',
 });
-
-
-// In documentation, you need to go to API > Classes > Pod or Custom resource definition. The methods and attribute are described there
-function PodCounter() {
-    const [crds, error] = K8s.ResourceClasses.CustomResourceDefinition.useList();
-
-    return (
-        <div>
-            {!error ? (
-                crds?.map((crd) => (
-                    <Typography key={crd.metadata.uid} color="textPrimary" sx={{fontStyle: 'italic'}}>
-                        {crd.metadata.name}
-                    </Typography>
-                ))
-            ) : (
-                <Typography color="error">Uh, something went wrong while fetching CRDs!</Typography>
-            )}
-        </div>
-    );
-}
-// Add components and routes for the three different side bar items.
-// This component rendered at URL: /c/mycluster/feedback2
 registerRoute({
-    path: '/crd',
-    sidebar: 'cluster',
-    name: 'CRD',
+    path: '/plugin',
+    sidebar: 'plugin',
+    name: 'plugin',
     exact: true,
     component: () => (
-        <SectionBox title="CRD" textAlign="center" paddingTop={2}>
-            <PodCounter />
+        <SectionBox title="Plugin" textAlign="center" paddingTop={2}>
+            <Typography>Fabulous plugin here</Typography>
+            <Link routeName="/plugin/crd">{'CRD Table'}</Link>
         </SectionBox>
     ),
 });
-
-
-// Remove "Workloads" top level sidebar menu item
-registerSidebarEntryFilter(entry => (entry.name === 'workloads' ? null : entry));
-// Remove "/workloads" route
-registerRouteFilter(route => (route.path === '/workloads' ? null : route));
-
-// Remove "Namespaces" second level sidebar menu item
-registerSidebarEntryFilter(entry => (entry.name === 'namespaces' ? null : entry));
-// Remove "/namespaces" route
-registerRouteFilter(route => (route.path === '/namespaces' ? null : route));
+registerRoute({
+    path: '/plugin/crd',
+    sidebar: 'plugin',
+    name: 'test',
+    exact: true,
+    component: () => (
+        <SectionBox>
+            <CrdList/>
+        </SectionBox>
+    ),
+});
+registerSidebarEntry({
+    parent: 'plugin',
+    name: 'crd',
+    label: 'CRDs',
+    url: '/plugin/crd',
+    icon: 'mdi:comment-quote',
+});
+registerRoute({
+    path: '/plugin/crd/:name',
+    sidebar: 'plugin',
+    name: 'details',
+    exact: true,
+    component: () => (
+        <SectionBox>
+            <CrdDetails/>
+        </SectionBox>
+    ),
+});
