@@ -1,5 +1,5 @@
 # Use the official Node.js image as builder
-FROM docker.io/library/node:16.4 as builder
+FROM docker.io/library/node:22.3 as builder
 LABEL authors="Guilamb"
 
 # Set the working directory inside the container
