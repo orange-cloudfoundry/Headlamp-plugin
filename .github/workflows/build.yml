@@ -1,7 +1,9 @@
 name: Build plugin image
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
@@ -12,12 +14,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set env
+        run: |
+              echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+              echo $RELEASE_VERSION
+              echo ${{ env.RELEASE_VERSION }}
+
       - name: setup docker
         uses: docker-practice/actions-setup-docker@master
 
       - name: build docker image
         run: |
-              docker build -t ghcr.io/orange-cloudfoundry/headlamp-plugin:latest ./
+              docker build -t ghcr.io/orange-cloudfoundry/headlamp-plugin:${{ env.RELEASE_VERSION }} ./
 
       - name: login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -28,4 +36,4 @@ jobs:
 
       - name: push docker image
         run: |
-              docker push ghcr.io/orange-cloudfoundry/headlamp-plugin:latest
+              docker push ghcr.io/orange-cloudfoundry/headlamp-plugin:${{ env.RELEASE_VERSION }}
