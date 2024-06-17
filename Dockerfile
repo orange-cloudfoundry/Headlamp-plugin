@@ -11,6 +11,9 @@ COPY ./ /headlamp-plugins/
 # Create a directory for build output
 RUN mkdir -p /headlamp-plugins/build
 
+# Update npm version
+RUN npm install -g npm@10.8.1
+
 # Build the headlamp plugin inside the container
 # RUN npx @kinvolk/headlamp-plugin build /headlamp-plugins
 RUN npm install -g @kinvolk/headlamp-plugin
