@@ -31,5 +31,9 @@
   },
   "devDependencies": {
     "@kinvolk/headlamp-plugin": "^0.9.1"
+  },
+  "dependencies": {
+    "@rjsf/core": "^5.18.4",
+    "@rjsf/validator-ajv8": "^5.18.4"
   }
 }

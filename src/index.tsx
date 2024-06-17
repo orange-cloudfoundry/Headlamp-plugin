@@ -1,15 +1,9 @@
-import {
-    registerRoute,
-    registerSidebarEntry,
-} from '@kinvolk/headlamp-plugin/lib';
-import {
-    Link,
-    SectionBox,
-} from '@kinvolk/headlamp-plugin/lib/CommonComponents';
+import { registerRoute, registerSidebarEntry } from '@kinvolk/headlamp-plugin/lib';
+import { Link, SectionBox } from '@kinvolk/headlamp-plugin/lib/CommonComponents';
 import React from 'react';
-import {Typography} from '@mui/material';
-import {CrdList} from "./Components/CrdList";
-import {CrdDetails} from "./Components/CrdDetails";
+import { Typography } from '@mui/material';
+import { CrdList } from './Components/CrdList';
+import { CrdDetails } from './Components/CrdDetails';
 
 registerSidebarEntry({
     parent: null,
@@ -37,7 +31,7 @@ registerRoute({
     exact: true,
     component: () => (
         <SectionBox>
-            <CrdList/>
+            <CrdList />
         </SectionBox>
     ),
 });
@@ -54,8 +48,30 @@ registerRoute({
     name: 'details',
     exact: true,
     component: () => (
-        <SectionBox>
-            <CrdDetails/>
+        <SectionBox backLink={false}>
+            <CrdDetails />
         </SectionBox>
     ),
 });
+registerRoute({
+    path: '/plugin/crd/:name/:namespace/:crName',
+    sidebar: 'plugin',
+    name: 'details',
+    exact: true,
+    component: () => (
+        <SectionBox backLink={false}>
+            <CrdDetails />
+        </SectionBox>
+    ),
+});
+
+/*// Remove "Workloads" top level sidebar menu item
+registerSidebarEntryFilter(entry => (entry.name === 'workloads' ? null : entry));
+// Remove "/workloads" route
+registerRouteFilter(route => (route.path === '/workloads' ? null : route));*/
+
+/*
+// Remove "s" second level sidebar menu item
+registerSidebarEntryFilter(entry => (entry.name === 'namespaces' ? null : entry));
+// Remove "/namespaces" route
+registerRouteFilter(route => (route.path === '/namespaces' ? null : route));*/
