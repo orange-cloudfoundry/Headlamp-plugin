@@ -12,7 +12,7 @@ COPY ./ /headlamp-plugins/
 RUN mkdir -p /headlamp-plugins/build
 
 # Update npm version
-RUN npm install -g npm@10.8.1
+RUN npm install -g npm@10.8.1 && npm --version
 
 
 RUN npm install -g
