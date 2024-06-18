@@ -12,14 +12,15 @@ COPY ./ /headlamp-plugins/
 RUN mkdir -p /headlamp-plugins/build
 
 # Update npm version
-RUN npm install -g npm@10.8.1 && npm --version
+RUN npm install npm@10.8.1 && npm --version
 
+RUN cat /headlamp-plugins/package.json
 
-RUN npm install -g
+RUN npm install
 
 # Build the headlamp plugin inside the container
 # RUN npx @kinvolk/headlamp-plugin build /headlamp-plugins
-RUN npm install -g @kinvolk/headlamp-plugin
+RUN npm install @kinvolk/headlamp-plugin
 
 RUN headlamp-plugin build /headlamp-plugins
 
