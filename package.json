@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@rjsf/core": "^5.18.4",
-    "@rjsf/validator-ajv8": "^5.18.4"
+    "@rjsf/validator-ajv8": "^5.18.4",
+    "jsonpath-plus": "^9.0.0"
   }
 }
